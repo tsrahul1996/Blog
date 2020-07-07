@@ -22,7 +22,7 @@ import lombok.ToString;
 @Table(name = "state_master_temporary")
 public class StateMaster {
     @Id
-    private String state;
+    private String stateCode;
     private String stateNameCaps;
     private String countryCode;
     private String status;
@@ -31,16 +31,16 @@ public class StateMaster {
     private int max_pin_prefix;
     
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "stateCode_FK", referencedColumnName = "state")
+    @JoinColumn(name = "stateCode_FK", referencedColumnName = "stateCode")
     private List<DistrictOrderResponse> districts;
 
 	
 
 
-	public StateMaster(String state, String stateNameCaps, String countryCode,  String status,
+	public StateMaster(String stateCode, String stateNameCaps, String countryCode,  String status,
 			String stateNameReg, int min_pin_prefix, int max_pin_prefix, List<DistrictOrderResponse> districts) {
 		super();
-		this.state = state;
+		this.stateCode = stateCode;
 		this.stateNameCaps = stateNameCaps;
 		this.countryCode = countryCode;
 		this.status = status;
@@ -51,13 +51,13 @@ public class StateMaster {
 	}
 
 
-	public String getState() {
-		return state;
+	public String getStateCode() {
+		return stateCode;
 	}
 
 
-	public void setState(String state) {
-		this.state = state;
+	public void setStateCode(String stateCode) {
+		this.stateCode = stateCode;
 	}
 
 

@@ -33,8 +33,7 @@ public class GeoLocController {
 
     @PostMapping("/getState")
     public List<StateMaster> findByState(@RequestBody StateMaster stateMaster){
-    	String stateString = stateMaster.getState();
-        return stateRepository.findByState(stateString);
+        return stateRepository.findByStateCode(stateMaster.getStateCode());
     }
     
  

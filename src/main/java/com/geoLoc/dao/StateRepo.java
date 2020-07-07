@@ -9,6 +9,6 @@ import com.geoLoc.model.StateMaster;
 @Repository
 public interface StateRepo extends JpaRepository<StateMaster,String> {
 	
-	public List<StateMaster> findByState(String state);
+	public List<StateMaster> findByStateCode(String stateCode);
 
 }
