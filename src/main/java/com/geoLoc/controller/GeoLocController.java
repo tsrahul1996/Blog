@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.geoLoc.dao.PincodeRepo;
 import com.geoLoc.dao.StateRepo;
+import com.geoLoc.dto.PincodeRequestDto;
 import com.geoLoc.model.PincodeMaster;
 import com.geoLoc.model.StateMaster;
 
@@ -26,9 +27,11 @@ public class GeoLocController {
     private StateRepo stateRepository;
     
     @PostMapping("/getPinCode")
-    public List<PincodeMaster> findByPincode(@RequestBody PincodeMaster pincodeMaster){
-    	int pincodeString = pincodeMaster.getPincode();
-        return pincodeRepository.findByPincode(pincodeString);
+    public List<PincodeMaster> findByPincode(@RequestBody PincodeRequestDto pincode){
+    	
+    	PincodeMaster pincodeObj = new PincodeMaster(pincode.getPincode());
+    	//int pincodeString = pincodeMaster.getPincode();
+        return pincodeRepository.findByPincode(pincodeObj.getPincode());
     }
 
     @PostMapping("/getState")

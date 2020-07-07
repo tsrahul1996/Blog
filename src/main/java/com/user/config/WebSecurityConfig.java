@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -64,7 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/swagger-ui.html/**").permitAll()
 			.antMatchers("/getState").permitAll()
 			.antMatchers("/api/test/**").permitAll()
-			.anyRequest().authenticated().and()
+		//	.anyRequest().authenticated()
+			.and()
 			.formLogin().loginProcessingUrl("api/auth/signin") //the URL on which the clients should post the login information
 	        .usernameParameter("email") //the username parameter in the queryString, default is 'username'
 	        .passwordParameter("password");
@@ -72,5 +74,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 	
-	
+	   @Override
+	    public void configure(WebSecurity web) throws Exception {
+	        web.ignoring().antMatchers("/common/**", "/v2/api-docs", "/configuration/ui", "/swagger-resources",
+	                "/configuration/security", "/swagger-ui.html", "/webjars/**");
+	    }
 }

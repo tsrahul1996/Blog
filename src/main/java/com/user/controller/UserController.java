@@ -66,7 +66,6 @@ public class UserController {
     	
 	}
 	
-	
 	@RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
 	public String confirmUserAccount(@RequestParam("token")String confirmationToken) {
 		int tokenNo = Integer.parseInt(confirmationToken);

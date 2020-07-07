@@ -2,6 +2,8 @@ package com.user.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -18,8 +20,23 @@ public class SwaggerConfig {
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.user"))
-                .paths(regex("/api.*"))
-                .build();
+                .apis(RequestHandlerSelectors.basePackage("com"))
+                .paths(regex("/.*"))
+                .build()
+                .apiInfo(metaInfo());
+    }
+    
+    private ApiInfo metaInfo() {
+
+		ApiInfo apiInfo = new ApiInfo(
+                "GagBike",
+                "GagBike API for blog",
+                "1.0",
+                "Terms of Service",
+                "Apache License Version 2.0",
+                "https://www.apache.org/licesen.html", null
+        );
+
+        return apiInfo;
     }
 }

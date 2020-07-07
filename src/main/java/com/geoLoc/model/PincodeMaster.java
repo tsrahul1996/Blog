@@ -83,6 +83,9 @@ public class PincodeMaster {
 	public PincodeMaster() {
 		
 	}
+	public PincodeMaster(int pincode) {
+		this.pincode = pincode;
+	}
 
    
 }

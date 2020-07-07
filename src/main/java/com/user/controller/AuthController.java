@@ -32,9 +32,12 @@ import com.user.dto.SignupRequest;
 import com.user.config.JwtUtils;
 import com.user.service.UserDetailsImpl;
 
+import io.swagger.annotations.Api;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
+@Api(value ="JWT Controller")
 public class AuthController {
 	@Autowired
 	AuthenticationManager authenticationManager;
