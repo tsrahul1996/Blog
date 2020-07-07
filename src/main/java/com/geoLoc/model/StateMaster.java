@@ -134,6 +134,9 @@ public class StateMaster {
 	public StateMaster() {
 		
 	}
+	public StateMaster(String  stateCode) {
+		this.stateCode = stateCode;
+	}
 }
 
 

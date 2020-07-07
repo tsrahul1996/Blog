@@ -23,20 +23,23 @@ import org.springframework.web.bind.annotation.RestController;
 import com.user.model.ERole;
 import com.user.model.Role;
 import com.user.model.User;
-import com.user.dto.JwtResponse;
-import com.user.dto.MessageResponse;
+import com.user.dto.JwtResponseDto;
+import com.user.dto.MessageResponseDto;
 import com.user.dao.RoleRepository;
 import com.user.dao.UserRepository;
-import com.user.dto.LoginRequest;
-import com.user.dto.SignupRequest;
+import com.user.dto.LoginRequestDto;
+import com.user.dto.SignupRequestDto;
 import com.user.config.JwtUtils;
 import com.user.service.UserDetailsImpl;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/user")
 @Api(value ="JWT Controller")
 public class AuthController {
 	@Autowired
@@ -55,7 +58,7 @@ public class AuthController {
 	JwtUtils jwtUtils;
 
 	@PostMapping("/signin")
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestDto loginRequest) {
 
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
@@ -68,7 +71,7 @@ public class AuthController {
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
-		return ResponseEntity.ok(new JwtResponse(jwt, 
+		return ResponseEntity.ok(new JwtResponseDto(jwt, 
 												 userDetails.getId(), 
 												 userDetails.getEmail(), 
 												 roles));
@@ -76,12 +79,15 @@ public class AuthController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+    @ApiOperation(value = "new user signup",response = ResponseEntity.class)
+	@ApiResponses(    
+			@ApiResponse(code = 200, message = "Successfully retrieved list"))
+	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequestDto signUpRequest) {
 
 		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
-					.body(new MessageResponse("Error: Email is already in use!"));
+					.body(new MessageResponseDto("Error: Email is already in use!"));
 		}
 		
 		// Create new user's account
@@ -121,6 +127,6 @@ public class AuthController {
 		user.setRoles(roles);
 		userRepository.save(user);
 
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		return ResponseEntity.ok(new MessageResponseDto("User registered successfully!"));
 	}
 }

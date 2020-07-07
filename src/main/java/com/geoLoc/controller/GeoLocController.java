@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.geoLoc.dao.PincodeRepo;
 import com.geoLoc.dao.StateRepo;
 import com.geoLoc.dto.PincodeRequestDto;
+import com.geoLoc.dto.StateRequestDto;
 import com.geoLoc.model.PincodeMaster;
 import com.geoLoc.model.StateMaster;
 
@@ -18,7 +19,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/geoLoc")
 public class GeoLocController {
     @Autowired
     private PincodeRepo pincodeRepository;
@@ -34,8 +35,9 @@ public class GeoLocController {
         return pincodeRepository.findByPincode(pincodeObj.getPincode());
     }
 
-    @PostMapping("/getState")
-    public List<StateMaster> findByState(@RequestBody StateMaster stateMaster){
+    @PostMapping("/getAllDistrict")
+    public List<StateMaster> findByState(@RequestBody StateRequestDto stateRequestDto){
+    	StateMaster stateMaster = new StateMaster(stateRequestDto.getStateCode());
         return stateRepository.findByStateCode(stateMaster.getStateCode());
     }
     

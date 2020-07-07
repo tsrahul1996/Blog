@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable()
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
+			.authorizeRequests().antMatchers("/user/**").permitAll()
 			.antMatchers("/getInfo").permitAll()
 			.antMatchers("/getInfo/**").permitAll()
 			.antMatchers("/getPinCode").permitAll()
@@ -67,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/api/test/**").permitAll()
 		//	.anyRequest().authenticated()
 			.and()
-			.formLogin().loginProcessingUrl("api/auth/signin") //the URL on which the clients should post the login information
+			.formLogin().loginProcessingUrl("user/signin") //the URL on which the clients should post the login information
 	        .usernameParameter("email") //the username parameter in the queryString, default is 'username'
 	        .passwordParameter("password");
 
